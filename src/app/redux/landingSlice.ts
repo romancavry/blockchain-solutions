@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { api } from '../api'
 import { COINS_IDS, DAYS_TO_HISTORY } from '../global-constants'
 import { getInfo } from '../utils/getInfo'
-import { ICoin } from '../utils/types'
+import { ICoin, ICoinHistory } from '../utils/types'
 
 export const getBtcPrice: any = createAsyncThunk('landing/getBtcPrice', async () => {
   const response = await api.get(`coins/${COINS_IDS.bitcoin}`)
@@ -46,12 +46,9 @@ export const landingSlice = createSlice({
       usd: {} as ICoin,
     },
     coinsHistory: {
-      btc: [],
-      eth: [],
-      usd: [],
-      // btc: [] as ICoinHistory,
-      // eth: [] as ICoinHistory,
-      // usd: [] as ICoinHistory,
+      btc: [] as ICoinHistory,
+      eth: [] as ICoinHistory,
+      usd: [] as ICoinHistory,
     }
   },
   reducers: {},

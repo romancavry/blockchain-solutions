@@ -10,9 +10,10 @@ import {
 } from 'chart.js'
 import { Line } from 'react-chartjs-2'
 import { getNormalDateFromUnix } from '../../../../../../app/utils/getNormalDateFromUnix'
+import { ICoinHistory } from '../../../../../../app/utils/types'
 
 interface ChartComponentProps {
-  coinHistory: any[]
+  coinHistory: ICoinHistory
   graphName: string
   lineColor: string
 }

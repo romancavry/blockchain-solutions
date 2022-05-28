@@ -3,3 +3,5 @@ export interface ICoin {
   short_name: string
   price: number
 }
+
+export type ICoinHistory = Array<number[]>

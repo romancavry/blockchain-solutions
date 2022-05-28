@@ -30,7 +30,6 @@ type PossibleCurrencyName = 'btc' | 'eth' | 'usd'
 
 export const Converter = () => {
   const coinsData = useAppSelector((state) => state.landing.coins)
-  const [loading, setLoading] = useState(true)
 
   const [firstTab, setFirstTab] = useState<ITab>(INITIAL_TABS_STATE)
   const [secondTab, setSecondTab] = useState<ITab>(INITIAL_TABS_STATE)
@@ -127,78 +126,73 @@ export const Converter = () => {
     ) {
       setFirstTab({ ...coinsData.btc, value: '0' })
       setSecondTab({ ...coinsData.eth, value: '0' })
-      setLoading(false)
     }
   }, [coinsData])
 
   return (
-    loading ? (
-      <div>Loading...</div>
-    ) : (
-      <div className={styles.container}>
-        <div className={styles.justifySpaceBetween}>
-          <div className={styles.currency_buttons}>
-            {Object.values(coinsData).map((coin) => (
-              <button
-                key={coin.price}
-                className={
-                  cn(styles.currency_button, firstTab.short_name === coin.short_name && styles.currency_button_active)
-                }
-                name={`first-${coin.short_name}`}
-                onClick={onTabChange}
-              >
-                {coin.short_name.toUpperCase()}
-              </button>
-            ))}
-          </div>
-  
-          <div className={styles.currency_buttons}>
-            {Object.values(coinsData).map((coin) => (
-              <button
-                key={coin.price}
-                className={
-                  cn(styles.currency_button, secondTab.short_name === coin.short_name && styles.currency_button_active)
-                }
-                name={`second-${coin.short_name}`}
-                onClick={onTabChange}
-              >
-                {coin.short_name.toUpperCase()}
-              </button>
-            ))}
-          </div>
+    <div className={styles.container}>
+      <div className={styles.justifySpaceBetween}>
+        <div className={styles.currency_buttons}>
+          {Object.values(coinsData).map((coin) => (
+            <button
+              key={coin.price}
+              className={
+                cn(styles.currency_button, firstTab.short_name === coin.short_name && styles.currency_button_active)
+              }
+              name={`first-${coin.short_name}`}
+              onClick={onTabChange}
+            >
+              {coin.short_name.toUpperCase()}
+            </button>
+          ))}
         </div>
-  
-        <div className={styles.justifySpaceBetween}>
-          <input
-            type='text'
-            className={styles.input}
-            value={firstTab.value}
-            onChange={onInputChange}
-            name='first'
-          />
-        
-          <button className={styles.transfer} onClick={transfer}>
-            <img src={transferIcon} alt='transfer' />
-          </button>
-  
-          <input
-            type='text'
-            className={styles.input}
-            value={secondTab.value}
-            onChange={onInputChange}
-            name='second'
-          />
-        </div>
-  
-        <div className={styles.justifySpaceBetween}>
-          <span className={styles.rate}>
-            1 {firstTab.short_name.toUpperCase()} = {formatPrice(firstTab.price)}$
-          </span>
-          <span className={styles.rate}>
-            1 {secondTab.short_name.toUpperCase()} = {formatPrice(secondTab.price)}$
-          </span>
+
+        <div className={styles.currency_buttons}>
+          {Object.values(coinsData).map((coin) => (
+            <button
+              key={coin.price}
+              className={
+                cn(styles.currency_button, secondTab.short_name === coin.short_name && styles.currency_button_active)
+              }
+              name={`second-${coin.short_name}`}
+              onClick={onTabChange}
+            >
+              {coin.short_name.toUpperCase()}
+            </button>
+          ))}
         </div>
       </div>
-    )
+
+      <div className={styles.justifySpaceBetween}>
+        <input
+          type='text'
+          className={styles.input}
+          value={firstTab.value}
+          onChange={onInputChange}
+          name='first'
+        />
+      
+        <button className={styles.transfer} onClick={transfer}>
+          <img src={transferIcon} alt='transfer' />
+        </button>
+
+        <input
+          type='text'
+          className={styles.input}
+          value={secondTab.value}
+          onChange={onInputChange}
+          name='second'
+        />
+      </div>
+
+      <div className={styles.justifySpaceBetween}>
+        <span className={styles.rate}>
+          1 {firstTab.short_name.toUpperCase()} = {formatPrice(firstTab.price)}$
+        </span>
+        <span className={styles.rate}>
+          1 {secondTab.short_name.toUpperCase()} = {formatPrice(secondTab.price)}$
+        </span>
+      </div>
+    </div>
   )
 }

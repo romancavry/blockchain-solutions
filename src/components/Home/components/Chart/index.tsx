@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useAppSelector } from '../../../../app/redux/hooks'
 import styles from './styles.module.scss'
 import cn from 'classnames'
@@ -9,7 +9,6 @@ type TTabs = 'BTC' | 'ETH' | 'USD'
 
 export const Chart = () => {
   const coinsHistory = useAppSelector((state) => state.landing.coinsHistory)
-  const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState<TTabs>('BTC')
 
   const onTabChange = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -19,15 +18,7 @@ export const Chart = () => {
     }
   }
 
-  useEffect(() => {
-    if (coinsHistory?.btc.length) {
-      setLoading(false)
-    }
-  }, [coinsHistory])
-
-  return loading ? (
-    <div>Loading...</div>
-  ) : (
+  return (
     <div className={styles.container}>
       <div className={styles.tabs}>
         {TABS.map((tab, idx) => (
