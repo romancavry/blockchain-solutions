@@ -1,0 +1,40 @@
+@import '../../../../scss/vars.scss';
+
+$borderRadius: 8px;
+
+.tabs {
+  display: flex;
+  margin: 0 auto 30px;
+  padding: 4px;
+  width: fit-content;
+  border: 1px solid $blackColor;
+  border-radius: $borderRadius;
+}
+
+.tab {
+  padding: 8px 20px;
+  border-radius: $borderRadius;
+
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: $blackColor;
+
+  background-color: $whiteColor;
+  cursor: pointer;
+  @include opacityHover();
+
+  &_active {
+    color: $whiteColor;
+    background-color: $blackColor;
+
+    &:hover {
+      opacity: 1 !important;
+    }
+  }
+}
+
+.graphs {
+  height: 500px;
+  margin-bottom: 100px;
+}

@@ -49,6 +49,9 @@ export const landingSlice = createSlice({
       btc: [],
       eth: [],
       usd: [],
+      // btc: [] as ICoinHistory,
+      // eth: [] as ICoinHistory,
+      // usd: [] as ICoinHistory,
     }
   },
   reducers: {},
