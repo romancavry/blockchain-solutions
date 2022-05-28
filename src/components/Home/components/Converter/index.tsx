@@ -26,6 +26,8 @@ const INITIAL_TABS_STATE = {
   price: 0,
 }
 
+type PossibleCurrencyName = 'btc' | 'eth' | 'usd'
+
 export const Converter = () => {
   const coinsData = useAppSelector((state) => state.landing.coins)
   const [loading, setLoading] = useState(true)
@@ -36,9 +38,9 @@ export const Converter = () => {
   const onTabChange = (event: React.MouseEvent<HTMLButtonElement>) => {
     const splitedName = event.currentTarget.name.split('-')
     const whichTab = splitedName[0]
-    const whichCurrency = splitedName[1]
+    const whichCurrency: PossibleCurrencyName = splitedName[1].includes('usd') ? 'usd' : splitedName[1] as PossibleCurrencyName
 
-    const activeTab = coinsData.find((item) => item.short_name === whichCurrency)
+    const activeTab = coinsData[whichCurrency]
     if (!activeTab) {
       return
     }
@@ -118,10 +120,14 @@ export const Converter = () => {
   }
 
   useEffect(() => {
-    if (coinsData?.length) {
+    if (
+      Object.keys(coinsData.btc).length !== 0 &&
+      Object.keys(coinsData.eth).length !== 0 &&
+      Object.keys(coinsData.usd).length !== 0
+    ) {
+      setFirstTab({ ...coinsData.btc, value: '0' })
+      setSecondTab({ ...coinsData.eth, value: '0' })
       setLoading(false)
-      setFirstTab({ ...coinsData[0], value: '0' })
-      setSecondTab({ ...coinsData[1], value: '0' })
     }
   }, [coinsData])
 
@@ -132,31 +138,31 @@ export const Converter = () => {
       <div className={styles.container}>
         <div className={styles.justifySpaceBetween}>
           <div className={styles.currency_buttons}>
-            {coinsData?.map((coin) => (
+            {Object.values(coinsData).map((coin) => (
               <button
-                key={coin.short_name}
+                key={coin.price}
                 className={
-                  cn(styles.currency_button, firstTab?.short_name === coin.short_name && styles.currency_button_active)
+                  cn(styles.currency_button, firstTab.short_name === coin.short_name && styles.currency_button_active)
                 }
                 name={`first-${coin.short_name}`}
                 onClick={onTabChange}
               >
-                {coin.short_name}
+                {coin.short_name.toUpperCase()}
               </button>
             ))}
           </div>
   
           <div className={styles.currency_buttons}>
-            {coinsData?.map((coin) => (
+            {Object.values(coinsData).map((coin) => (
               <button
-                key={coin.short_name}
+                key={coin.price}
                 className={
-                  cn(styles.currency_button, secondTab?.short_name === coin.short_name && styles.currency_button_active)
+                  cn(styles.currency_button, secondTab.short_name === coin.short_name && styles.currency_button_active)
                 }
                 name={`second-${coin.short_name}`}
                 onClick={onTabChange}
               >
-                {coin.short_name}
+                {coin.short_name.toUpperCase()}
               </button>
             ))}
           </div>
@@ -186,10 +192,10 @@ export const Converter = () => {
   
         <div className={styles.justifySpaceBetween}>
           <span className={styles.rate}>
-            1 {firstTab.short_name} = {formatPrice(firstTab.price)}$
+            1 {firstTab.short_name.toUpperCase()} = {formatPrice(firstTab.price)}$
           </span>
           <span className={styles.rate}>
-            1 {secondTab.short_name} = {formatPrice(secondTab.price)}$
+            1 {secondTab.short_name.toUpperCase()} = {formatPrice(secondTab.price)}$
           </span>
         </div>
       </div>

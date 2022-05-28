@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { api } from '../api'
-import { COINS_IDS } from '../global-constants'
+import { COINS_IDS, DAYS_TO_HISTORY } from '../global-constants'
+import { getInfo } from '../utils/getInfo'
 import { ICoin } from '../utils/types'
 
 export const getBtcPrice: any = createAsyncThunk('landing/getBtcPrice', async () => {
@@ -18,25 +19,62 @@ export const getUsdPrice: any = createAsyncThunk('landing/getUsdPrice', async ()
   return response.data
 })
 
+export const getBtcHistory: any = createAsyncThunk('landing/getBtcHistory', async () => {
+  const url = `coins/${COINS_IDS.bitcoin}/market_chart?vs_currency=usd&days=${DAYS_TO_HISTORY}&interval=daily`
+  const response = await api.get(url)
+  return response.data
+})
+
+export const getEthHistory: any = createAsyncThunk('landing/getEthHistory', async () => {
+  const url = `coins/${COINS_IDS.ethereum}/market_chart?vs_currency=usd&days=${DAYS_TO_HISTORY}&interval=daily`
+  const response = await api.get(url)
+  return response.data
+})
+
+export const getUsdHistory: any = createAsyncThunk('landing/getUsdHistory', async () => {
+  const url = `coins/${COINS_IDS.usd}/market_chart?vs_currency=usd&days=${DAYS_TO_HISTORY}&interval=daily`
+  const response = await api.get(url)
+  return response.data
+})
+
 export const landingSlice = createSlice({
   name: 'landing',
   initialState: {
-    coins: [] as ICoin[],
-  },
-  reducers: {
-    setCoins(state, { payload }) {
-      state.coins = payload
+    coins: {
+      btc: {} as ICoin,
+      eth: {} as ICoin,
+      usd: {} as ICoin,
     },
+    coinsHistory: {
+      btc: [],
+      eth: [],
+      usd: [],
+    }
   },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getBtcPrice.fulfilled, (state, { payload }) => {
-      console.log('getBtcPrice', payload)
+      state.coins.btc = getInfo(payload)
     })
-    builder.addCase(getBtcPrice.rejected, (state, { payload }) => {
-      console.log('getBtcPrice', payload)
+    builder.addCase(getEthPrice.fulfilled, (state, { payload }) => {
+      state.coins.eth = getInfo(payload)
+    })
+    builder.addCase(getUsdPrice.fulfilled, (state, { payload }) => {
+      state.coins.usd = getInfo(payload)
+    })
+
+    builder.addCase(getBtcHistory.fulfilled, (state, { payload }) => {
+      state.coinsHistory.btc = payload.prices
+    })
+    builder.addCase(getEthHistory.fulfilled, (state, { payload }) => {
+      state.coinsHistory.eth = payload.prices
+    })
+    builder.addCase(getUsdHistory.fulfilled, (state, { payload }) => {
+      state.coinsHistory.usd = payload.prices
     })
   },
 })
 
-export const { setCoins } = landingSlice.actions
+// eslint-disable-next-line no-empty-pattern
+export const {} = landingSlice.actions
 export default landingSlice.reducer
