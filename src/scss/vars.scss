@@ -1,0 +1,12 @@
+$whiteColor: #fff;
+$blackColor: #333;
+
+@mixin opacityHover {
+  opacity: 1;
+  transition: opacity .3s ease;
+  
+  &:hover {
+    opacity: .7;
+    transition: opacity .3s ease;
+  }
+}

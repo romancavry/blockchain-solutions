@@ -1,0 +1,78 @@
+@import '../../../../scss/vars.scss';
+
+$borderRadius: 8px;
+
+.justifySpaceBetween {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.part {
+  max-width: 400px;
+  width: 100%;
+
+  &:not(:last-child) {
+    margin-right: 20px;
+  }
+}
+
+.currency_buttons {
+  display: flex;
+  margin-bottom: 30px;
+  padding: 4px;
+  width: fit-content;
+  border: 1px solid $blackColor;
+  border-radius: $borderRadius;
+}
+
+.currency_button {
+  padding: 8px 20px;
+  border-radius: $borderRadius;
+
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: $blackColor;
+
+  background-color: $whiteColor;
+  cursor: pointer;
+  @include opacityHover();
+
+  &_active {
+    color: $whiteColor;
+    background-color: $blackColor;
+
+    &:hover {
+      opacity: 1 !important;
+    }
+  }
+}
+
+.input {
+  margin-bottom: 10px;
+  padding: 20px 40px;
+  max-width: 35%;
+  width: 100%;
+  min-height: 150px;
+  border-radius: $borderRadius;
+
+  font-size: 50px;
+  font-weight: 500;
+  line-height: 1.5;
+
+  resize: none;
+}
+
+.rate {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: $blackColor;
+}
+
+.transfer {
+  width: 50px;
+  @include opacityHover();
+  cursor: pointer;
+}
