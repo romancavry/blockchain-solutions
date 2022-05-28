@@ -6,6 +6,7 @@ import { useAppSelector } from '../../../../app/redux/hooks'
 import { formatPrice } from '../../../../app/utils/formatPrice'
 import { ICoin } from '../../../../app/utils/types'
 import { ONLY_DIGITS_REGEX } from '../../../../app/global-constants'
+import { beautifyValue } from '../../../../app/utils/beautifyValue'
 
 interface ITab extends ICoin {
   value: string
@@ -107,10 +108,6 @@ export const Converter = () => {
     const currentPrice = current.amount * current.price
     const amountToBuy = currentPrice / target.price
     return isNaN(amountToBuy) ? 'Invalid' : beautifyValue(amountToBuy)
-  }
-
-  const beautifyValue = (value: number) => {
-    return String(Number(value.toFixed(4)))
   }
 
   const transfer = () => {
