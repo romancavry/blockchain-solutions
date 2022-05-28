@@ -1,0 +1,39 @@
+@import '../../scss/vars.scss';
+
+.header {
+  margin-bottom: 20px;
+  padding: 20px;
+  border-bottom: 1px solid $blackColor;
+}
+
+.container {
+  @include appContainer();
+}
+
+.nav_list {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.nav_item {
+  &:not(:last-child) {
+    margin-right: 20px;
+  }
+}
+
+.nav_button {
+  font-size: 25px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: $grayColor;
+
+  @include opacityHover();
+  cursor: pointer;
+
+  &_active {
+    color: $blackColor;
+    opacity: 1 !important;
+  }
+}

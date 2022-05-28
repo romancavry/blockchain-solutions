@@ -40,6 +40,7 @@ export const getUsdHistory: any = createAsyncThunk('landing/getUsdHistory', asyn
 export const landingSlice = createSlice({
   name: 'landing',
   initialState: {
+    needToLoad: true,
     coins: {
       btc: {} as ICoin,
       eth: {} as ICoin,
@@ -51,7 +52,11 @@ export const landingSlice = createSlice({
       usd: [] as ICoinHistory,
     }
   },
-  reducers: {},
+  reducers: {
+    setNeedToLoad(state, { payload }) {
+      state.needToLoad = payload
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(getBtcPrice.fulfilled, (state, { payload }) => {
       state.coins.btc = getInfo(payload)
@@ -75,6 +80,5 @@ export const landingSlice = createSlice({
   },
 })
 
-// eslint-disable-next-line no-empty-pattern
-export const {} = landingSlice.actions
+export const { setNeedToLoad } = landingSlice.actions
 export default landingSlice.reducer

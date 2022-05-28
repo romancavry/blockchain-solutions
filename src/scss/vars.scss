@@ -1,5 +1,6 @@
 $whiteColor: #fff;
 $blackColor: #333;
+$grayColor: #b4afaf;
 
 @mixin opacityHover {
   opacity: 1;
@@ -9,4 +10,10 @@ $blackColor: #333;
     opacity: .7;
     transition: opacity .3s ease;
   }
+}
+
+@mixin appContainer {
+  margin: 0 auto;
+  max-width: 1200px;
+  width: 100%;
 }

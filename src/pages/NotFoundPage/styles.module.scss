@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  width: fit-content;
+}
+
+.code {
+  margin: 0;
+  padding: 0;
+  
+  font-size: 120px;
+  line-height: 1;
+  font-weight: 700;
+}
+
+.error {
+  margin: 0;
+  padding: 0;
+
+  font-size: 50px;
+  line-height: 1;
+  font-weight: 600;
+}
